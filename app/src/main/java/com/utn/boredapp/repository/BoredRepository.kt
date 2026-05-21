@@ -1,5 +1,6 @@
-package com.utn.boredapp.data
+package com.utn.boredapp.repository
 
+import com.utn.boredapp.data.FavoriteStore
 import com.utn.boredapp.models.Actividad
 import com.utn.boredapp.network.BoredApiService
 

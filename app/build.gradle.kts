@@ -66,4 +66,6 @@ dependencies {
     implementation(libs.androidx.datastore.preferences)
     //Navigation: para la navegacion entre pantallas
     implementation(libs.androidx.navigation.compose)
+    //Icons: paquete extendido de iconos
+    implementation(libs.androidx.compose.material.icons.extended)
 }

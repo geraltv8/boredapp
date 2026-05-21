@@ -7,41 +7,39 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import com.utn.boredapp.repository.BoredRepository
+import com.utn.boredapp.data.FavoriteStore
+import com.utn.boredapp.network.RetrofitClient
+import com.utn.boredapp.ui.navigation.AppNavigation
 import com.utn.boredapp.ui.theme.BoredAppTheme
+import com.utn.boredapp.viewmodel.BoredViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        val favoriteStore = FavoriteStore(this)
+
+        val repository = BoredRepository(
+            api = RetrofitClient.api,
+            store = favoriteStore
+        )
+
+        val boredViewModel = BoredViewModel(repository)
+
+        boredViewModel.cargarNuevas()
+
         setContent {
             BoredAppTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
+                    AppNavigation(
+                        viewModel = boredViewModel,
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    BoredAppTheme {
-        Greeting("Android")
     }
 }
