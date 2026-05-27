@@ -22,11 +22,6 @@ class MainActivity : ComponentActivity() {
 
         val favoriteStore = FavoriteStore(this)
 
-        val repository = BoredRepository(
-            api = RetrofitClient.api,
-            store = favoriteStore
-        )
-
         val boredViewModel = BoredViewModel(repository)
 
         boredViewModel.cargarNuevas()
