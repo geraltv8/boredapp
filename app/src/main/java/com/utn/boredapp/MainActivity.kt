@@ -8,9 +8,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
-import com.utn.boredapp.repository.BoredRepository
-import com.utn.boredapp.data.FavoriteStore
-import com.utn.boredapp.network.RetrofitClient
 import com.utn.boredapp.ui.navigation.AppNavigation
 import com.utn.boredapp.ui.theme.BoredAppTheme
 import com.utn.boredapp.viewmodel.BoredViewModel
@@ -20,14 +17,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        val favoriteStore = FavoriteStore(this)
-
-        val repository = BoredRepository(
-            api = RetrofitClient.api,
-            store = favoriteStore
-        )
-
-        val boredViewModel = BoredViewModel(repository)
+        val appContainer = (application as BoredApplication).container
+        val boredViewModel = BoredViewModel(appContainer.boredRepository)
 
         boredViewModel.cargarNuevas()
 

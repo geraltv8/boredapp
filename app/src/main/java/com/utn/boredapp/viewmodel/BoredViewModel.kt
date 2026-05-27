@@ -10,40 +10,49 @@ import com.utn.boredapp.repository.BoredRepository
 import com.utn.boredapp.models.Actividad
 import kotlinx.coroutines.launch
 
-class BoredViewModel(private val repository: BoredRepository) : ViewModel() {
-    var actividades by mutableStateOf<List<Actividad>>(emptyList())
+sealed interface BoredUiState {
+    object Loading : BoredUiState
+    data class Success(val actividades: List<Actividad>) : BoredUiState
+    data class Error(val mensaje: String) : BoredUiState
+}
 
-    var isLoading by mutableStateOf(false)
+class BoredViewModel(private val repository: BoredRepository) : ViewModel() {
+
+    var uiState by mutableStateOf<BoredUiState>(BoredUiState.Loading)
         private set
+
+    private var listaInterna = mutableListOf<Actividad>()
 
     fun cargarNuevas() {
         viewModelScope.launch {
-            isLoading = true
+            uiState = BoredUiState.Loading
 
-            val mantenidas = actividades.filter { it.isFavorite }
+            val mantenidas = listaInterna.filter { it.isFavorite }
             val nuevas = mutableListOf<Actividad>()
 
-            repeat(Constant.CANTIDAD_ACTIVIDADES - mantenidas.size) {
-                try {
+            try {
+                repeat(5 - mantenidas.size) {
                     nuevas.add(repository.fetchNewActivity())
-                } catch (e: Exception) { /* error */}
+                }
+                listaInterna = (mantenidas + nuevas).toMutableList()
+
+                uiState = BoredUiState.Success(listaInterna)
+            } catch (e: Exception) {
+                uiState = BoredUiState.Error("No se pudieron cargar las actividades. Revisa tu conexión.")
             }
-
-            actividades = mantenidas + nuevas
-
-            isLoading = false
         }
     }
 
-    fun marcarFavoritos(actividad: Actividad) {
-        actividades = actividades.map {
+    fun marcarFavorito(actividad: Actividad) {
+        listaInterna = listaInterna.map {
             if (it.key == actividad.key) it.copy(isFavorite = !it.isFavorite) else it
-        }
+        }.toMutableList()
+
+        uiState = BoredUiState.Success(listaInterna)
 
         viewModelScope.launch {
-            val keys = actividades.filter { it.isFavorite }.map { it.key }.toSet()
-            repository.updateFavorites((keys))
+            val keys = listaInterna.filter { it.isFavorite }.map { it.key }.toSet()
+            repository.updateFavorites(keys)
         }
     }
-
 }
