@@ -11,7 +11,11 @@ object RetrofitClient {
     val api: BoredApiService by lazy {
         Retrofit.Builder()
             .baseUrl(Constant.BASE_URL)
-            .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
+            .addConverterFactory(
+                json.asConverterFactory (
+                Constant.CONTENT_TYPE.toMediaType()
+                )
+            )
             .build()
             .create(BoredApiService::class.java)
     }

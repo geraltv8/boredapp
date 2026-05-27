@@ -4,6 +4,7 @@ object Constant {
     // Configuración de Red
     const val BASE_URL = "https://bored-api.appbrewery.com/"
     const val ENDPOINT_RANDOM = "random"
+    const val CONTENT_TYPE = "application/json"
 
     // Configuración de Persistencia
     const val DATASTORE_NAME = "settings"

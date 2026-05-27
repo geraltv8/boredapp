@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">BoredApp</string>
+    <string name="mis_actividades">Mis Actividades</string>
+    <string name="actualizar">Actualizar</string>
+    <string name="precio">Precio</string>
+    <string name="participantes">Participantes</string>
+    <string name="link">Link</string>
+    <string name="tipo">Tipo</string>
 </resources>

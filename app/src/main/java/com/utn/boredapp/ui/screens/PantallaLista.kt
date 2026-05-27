@@ -20,8 +20,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.utn.boredapp.R
 import com.utn.boredapp.models.DestinoDetalle
 import com.utn.boredapp.ui.components.MainColumn
 import com.utn.boredapp.viewmodel.BoredViewModel
@@ -29,17 +31,28 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
 @Composable
-fun PantallaLista(navController: NavController, viewModel: BoredViewModel, modifier: Modifier = Modifier) {
+fun PantallaLista(navController: NavController, viewModel: BoredViewModel) {
     MainColumn {
-        Text("Mis Actividades", style = MaterialTheme.typography.headlineMedium)
+        Text(
+            stringResource(id = R.string.mis_actividades),
+            style = MaterialTheme.typography.headlineMedium
+        )
 
         if (viewModel.isLoading) CircularProgressIndicator()
 
         LazyColumn(modifier = Modifier.weight(1f)) {
             items(viewModel.actividades) { act ->
-                Card(modifier = Modifier.fillMaxWidth().padding(8.dp).clickable {
-                    navController.navigate(DestinoDetalle(Json.encodeToString(act)))
-                }) {
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp)
+                        .clickable {
+                    navController.navigate(
+                        DestinoDetalle(Json.encodeToString(act)
+                            )
+                        )
+                    }
+                ) {
                     Row(Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
                         Text(act.activity, Modifier.weight(1f))
                         IconButton(onClick = { viewModel.marcarFavoritos(act) }) {
@@ -53,6 +66,8 @@ fun PantallaLista(navController: NavController, viewModel: BoredViewModel, modif
                 }
             }
         }
-        Button(onClick = { viewModel.cargarNuevas() }) { Text("Actualizar") }
+        Button(onClick = {
+            viewModel.cargarNuevas()
+        }) { Text(stringResource(id = R.string.actualizar)) }
     }
 }
