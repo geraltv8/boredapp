@@ -13,12 +13,8 @@ import kotlinx.coroutines.launch
 class BoredViewModel(private val repository: BoredRepository) : ViewModel() {
     var actividades by mutableStateOf<List<Actividad>>(emptyList())
 
-    var isLoading by mutableStateOf(false)
-        private set
-
     fun cargarNuevas() {
         viewModelScope.launch {
-            isLoading = true
 
             val mantenidas = actividades.filter { it.isFavorite }
             val nuevas = mutableListOf<Actividad>()
@@ -31,7 +27,6 @@ class BoredViewModel(private val repository: BoredRepository) : ViewModel() {
 
             actividades = mantenidas + nuevas
 
-            isLoading = false
         }
     }
 

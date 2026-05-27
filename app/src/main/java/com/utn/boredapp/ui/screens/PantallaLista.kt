@@ -1,6 +1,7 @@
 package com.utn.boredapp.ui.screens
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -32,7 +33,7 @@ import kotlinx.serialization.json.Json
 
 @Composable
 fun PantallaLista(navController: NavController, viewModel: BoredViewModel) {
-    MainColumn {
+    Column {
         Text(
             stringResource(id = R.string.mis_actividades),
             style = MaterialTheme.typography.headlineMedium

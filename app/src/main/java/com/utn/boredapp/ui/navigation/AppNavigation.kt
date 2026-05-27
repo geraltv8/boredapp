@@ -24,11 +24,11 @@ fun AppNavigation(viewModel: BoredViewModel, modifier: Modifier = Modifier) {
         modifier = modifier)
     {
         composable<DestinoLista> {
-            PantallaLista(navController, viewModel)
+            PantallaLista()
         }
         composable<DestinoDetalle> { backStackEntry ->
             val route = backStackEntry.toRoute<DestinoDetalle>()
-            val actividad = Json.decodeFromString<Actividad>(route.activityJson)
+            val actividad = Json.encodeFromString<Actividad>(route.activityJson)
             PantallaDetalle(actividad)
         }
     }

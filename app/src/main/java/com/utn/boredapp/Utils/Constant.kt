@@ -2,7 +2,7 @@ package com.utn.boredapp.Utils
 
 object Constant {
     // Configuración de Red
-    const val BASE_URL = "https://bored-api.appbrewery.com/"
+    const val BASE_URL = "https://bored-api.appbrewery.com/$ENDPOINT_RANDOM"
     const val ENDPOINT_RANDOM = "random"
     const val CONTENT_TYPE = "application/json"
 

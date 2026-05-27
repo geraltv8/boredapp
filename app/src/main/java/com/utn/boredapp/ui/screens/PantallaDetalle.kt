@@ -1,5 +1,6 @@
 package com.utn.boredapp.ui.screens
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.MaterialTheme
@@ -14,7 +15,7 @@ import com.utn.boredapp.ui.components.MainColumn
 
 @Composable
 fun PantallaDetalle(actividad: Actividad) {
-    MainColumn {
+    Column {
         Text(actividad.activity, style = MaterialTheme.typography.headlineSmall)
         Spacer(modifier = Modifier.height(8.dp))
         Text(stringResource(id = R.string.tipo) + ": ${actividad.type}")
